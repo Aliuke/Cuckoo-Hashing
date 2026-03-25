@@ -84,7 +84,7 @@ class CuckooSet(Collection):
         # raise error if x is None
         if x is None:
             raise ValueError("key may not be None")
-        
+
         h1, h2 = self._hash2_(x, self._size_) # get hash indices
         if (self.htab1[h1] == x): # check if in table 1
             return True
@@ -105,7 +105,7 @@ class CuckooSet(Collection):
             if (self.htab2[h2] == x): # check if in table 2
                 self.htab2[h2] = None
         return
-    
+
 
 # removes x from the table if it is present
 # quietly returns if x is not present
@@ -167,10 +167,3 @@ class CuckooSet(Collection):
                 # set counter to zero
                 counter = 0
                 # go to start
-        
-
-cs = CuckooSet([1, 2, 3, 4])
-cs.remove(1)
-print(2 in cs)
-print(1 in cs)
-print(cs)

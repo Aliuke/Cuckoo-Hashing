@@ -171,5 +171,3 @@ class CuckooSet(Collection):
                 # set counter to zero
                 counter = 0
                 # go to start
-
-cs = CuckooSet([])

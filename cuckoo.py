@@ -85,10 +85,10 @@ class CuckooSet(Collection):
         if x is None:
             raise ValueError("key may not be None")
 
-        h1, h2 = self._hash2_(x, self._size_) # get hash indices
-        if (self.htab1[h1] == x): # check if in table 1
+        h1, h2 = self._hash2_(x, self._size_)  # get hash indices
+        if (self.htab1[h1] == x):  # check if in table 1
             return True
-        if (self.htab2[h2] == x): # check if in table 2
+        if (self.htab2[h2] == x):  # check if in table 2
             return True
         return False
 
@@ -99,10 +99,10 @@ class CuckooSet(Collection):
         if x not in self:
             raise ValueError()
         else:
-            h1, h2 = self._hash2_(x, self._size_) # get hash indices
-            if (self.htab1[h1] == x): # check if in table 1
+            h1, h2 = self._hash2_(x, self._size_)  # get hash indices
+            if (self.htab1[h1] == x):  # check if in table 1
                 self.htab1[h1] = None
-            if (self.htab2[h2] == x): # check if in table 2
+            if (self.htab2[h2] == x):  # check if in table 2
                 self.htab2[h2] = None
         return
 
@@ -113,10 +113,10 @@ class CuckooSet(Collection):
         if x not in self:
             return
         else:
-            h1, h2 = self._hash2_(x, self._size_) # get hash indices
-            if (self.htab1[h1] == x): # check if in table 1
+            h1, h2 = self._hash2_(x, self._size_)  # get hash indices
+            if (self.htab1[h1] == x):  # check if in table 1
                 self.htab1[h1] = None
-            if (self.htab2[h2] == x): # check if in table 2
+            if (self.htab2[h2] == x):  # check if in table 2
                 self.htab2[h2] = None
         return
 
@@ -124,6 +124,10 @@ class CuckooSet(Collection):
 # adds x to htab1 or htab2, if x is hashable
 # will resize the hash table if necessary
     def add(self, x):
+        # check if x is already in table
+        if x in self:
+            return
+
         # set counter to 0
         counter = 0
 
@@ -167,3 +171,5 @@ class CuckooSet(Collection):
                 # set counter to zero
                 counter = 0
                 # go to start
+
+cs = CuckooSet([])

@@ -124,9 +124,50 @@ class CuckooSet(Collection):
 # adds x to htab1 or htab2, if x is hashable
 # will resize the hash table if necessary
     def add(self, x):
-        h1, h2 = self._hash2_(x, self._size_)
-        self.htab2[h2] = x
-        return
+        # set counter to 0
+        counter = 0
+
+        # start
+        while (True):
+
+            # compute h1 for x
+            h1, h2 = self._hash2_(x, self._size_)
+
+            # check if htab1[h1] is empty
+            if (self.htab1[h1] == None):
+                # if yes, place x here and return
+                self.htab1[h1] = x
+                return
+            else:
+                # if no, swap x and the element at htab1[h1]
+                temp = self.htab1[h1]
+                self.htab1[h1] = x
+                x = temp
+
+            # compute h2 for new x
+            h1, h2 = self._hash2_(x, self._size_)
+
+            # check if htab2[h2] is empty
+            if (self.htab2[h2] == None):
+                # if yes, place x here and return
+                self.htab2[h2] = x
+                return
+            else:
+                # if no, swap x and htab2[h2]
+                temp = self.htab2[h2]
+                self.htab2[h2] = x
+                x = temp
+                # increment counter by 1
+                counter += 1
+
+            # if counter is greater than or equal to MAXSWAPS
+            if (counter >= self._MAXSWAPS_):
+                # resize table
+                self._resize_()
+                # set counter to zero
+                counter = 0
+                # go to start
+        
 
 cs = CuckooSet([1, 2, 3, 4])
 cs.remove(1)

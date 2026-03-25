@@ -79,9 +79,24 @@ class CuckooSet(Collection):
 # ******* THIS IS LINE Y ******************
 
     def __contains__(self, x):
-        h1, h2 = self._hash2_(x, self._size_)
-        if (self.htab1[h1] == x):
+        # raise error if x is None
+        if x is None:
+            raise ValueError("key may not be None")
+        
+        h1, h2 = self._hash2_(x, self._size_) # get hash indices
+        if (self.htab1[h1] == x): # check if in table 1
             return True
-        if (self.htab2[h2] == x):
+        if (self.htab2[h2] == x): # check if in table 2
             return True
         return False
+
+    def remove(self, x):
+        if x not in self:
+            raise ValueError()
+        else:
+            h1, h2 = self._hash2_(x, self._size_) # get hash indices
+            if (self.htab1[h1] == x): # check if in table 1
+                self.htab1[h1] = None
+            if (self.htab2[h2] == x): # check if in table 2
+                self.htab2[h2] = None
+        return

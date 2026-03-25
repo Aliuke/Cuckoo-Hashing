@@ -100,3 +100,14 @@ class CuckooSet(Collection):
             if (self.htab2[h2] == x): # check if in table 2
                 self.htab2[h2] = None
         return
+    
+    def add(self, x):
+        h1, h2 = self._hash2_(x, self._size_)
+        self.htab2[h2] = x
+        return
+
+cs = CuckooSet([1, 2, 3, 4])
+cs.remove(1)
+print(2 in cs)
+print(1 in cs)
+print(cs)

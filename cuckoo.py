@@ -78,6 +78,8 @@ class CuckooSet(Collection):
         return self._allmembers_()
 # ******* THIS IS LINE Y ******************
 
+# returns true if x is in htab1 or htab2, false otherwise.
+# raises ValueError if x is None
     def __contains__(self, x):
         # raise error if x is None
         if x is None:
@@ -90,6 +92,9 @@ class CuckooSet(Collection):
             return True
         return False
 
+
+# removes x from the table if it is present
+# throws ValueError if x is not present
     def remove(self, x):
         if x not in self:
             raise ValueError()
@@ -101,6 +106,23 @@ class CuckooSet(Collection):
                 self.htab2[h2] = None
         return
     
+
+# removes x from the table if it is present
+# quietly returns if x is not present
+    def discard(self, x):
+        if x not in self:
+            return
+        else:
+            h1, h2 = self._hash2_(x, self._size_) # get hash indices
+            if (self.htab1[h1] == x): # check if in table 1
+                self.htab1[h1] = None
+            if (self.htab2[h2] == x): # check if in table 2
+                self.htab2[h2] = None
+        return
+
+
+# adds x to htab1 or htab2, if x is hashable
+# will resize the hash table if necessary
     def add(self, x):
         h1, h2 = self._hash2_(x, self._size_)
         self.htab2[h2] = x

@@ -77,3 +77,11 @@ class CuckooSet(Collection):
     def __iter__(self):
         return self._allmembers_()
 # ******* THIS IS LINE Y ******************
+
+    def __contains__(self, x):
+        h1, h2 = self._hash2_(x, self._size_)
+        if (self.htab1[h1] == x):
+            return True
+        if (self.htab2[h2] == x):
+            return True
+        return False
